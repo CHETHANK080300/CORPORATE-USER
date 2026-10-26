@@ -25,15 +25,15 @@ extension UserRoleExtension on UserRole {
   String get displayNameEn {
     switch (this) {
       case UserRole.groupTreasuryManager:
-        return 'Group Treasury Manager';
+        return 'Group CIO / Treasury';
       case UserRole.corporateGroupFinanceManager:
-        return 'Corporate Group Finance Manager';
+        return 'Corporate Finance Director';
       case UserRole.companyAccountantHotels:
-        return 'Company Accountant – Hotels';
+        return 'Regional Systems Manager';
       case UserRole.corporateApprover:
         return 'Corporate Approver';
       case UserRole.corporateViewerAuditor:
-        return 'Corporate Viewer / Auditor';
+        return 'Corporate Auditor';
     }
   }
 }
@@ -281,9 +281,161 @@ class FinancialSummary {
     required this.totalAvailableOverdraft,
     required this.pendingApprovalsCount,
     required this.pendingApprovalsAmount,
-    this.currency = 'VND',
+    this.currency = 'USD',
   });
 
   double get netLiquidity =>
       totalCash + totalDeposits - totalLoans - totalUtilizedOverdraft;
+}
+
+// Global Corporate CIO Models
+
+class CioKpiSummary {
+  final double globalCashPosition;
+  final double cashChangePct;
+  final double availableCash;
+  final double availableChangePct;
+  final double intradayLiquidity;
+  final double liquidityChangePct;
+  final double forecast7Day;
+  final double forecastChangePct;
+  final int totalEntities;
+  final int totalCountries;
+  final int newEntitiesThisMonth;
+
+  const CioKpiSummary({
+    required this.globalCashPosition,
+    required this.cashChangePct,
+    required this.availableCash,
+    required this.availableChangePct,
+    required this.intradayLiquidity,
+    required this.liquidityChangePct,
+    required this.forecast7Day,
+    required this.forecastChangePct,
+    required this.totalEntities,
+    required this.totalCountries,
+    required this.newEntitiesThisMonth,
+  });
+}
+
+class CurrencySpendItem {
+  final String currencyCode;
+  final String currencyName;
+  final double amountUsd;
+  final double percentage;
+  final int colorHex;
+
+  const CurrencySpendItem({
+    required this.currencyCode,
+    required this.currencyName,
+    required this.amountUsd,
+    required this.percentage,
+    required this.colorHex,
+  });
+}
+
+class CashForecastPoint {
+  final String label;
+  final double projectedBalance;
+  final double confidenceMin;
+  final double confidenceMax;
+
+  const CashForecastPoint({
+    required this.label,
+    required this.projectedBalance,
+    required this.confidenceMin,
+    required this.confidenceMax,
+  });
+}
+
+class TopEntityBalance {
+  final String entityName;
+  final String currency;
+  final double balanceUsd;
+  final double ratio;
+
+  const TopEntityBalance({
+    required this.entityName,
+    required this.currency,
+    required this.balanceUsd,
+    required this.ratio,
+  });
+}
+
+class CountryCashPosition {
+  final String countryName;
+  final String countryCode;
+  final double cashBalanceUsd;
+  final double percentageOfTotal;
+
+  const CountryCashPosition({
+    required this.countryName,
+    required this.countryCode,
+    required this.cashBalanceUsd,
+    required this.percentageOfTotal,
+  });
+}
+
+class UtilizationMetrics {
+  final int utilizationPct;
+  final double sweptTodayUsd;
+  final double pooledBalanceUsd;
+  final int accountsInPool;
+  final double trappedCashReducedUsd;
+  final double capitalEfficiencyGainPct;
+
+  const UtilizationMetrics({
+    required this.utilizationPct,
+    required this.sweptTodayUsd,
+    required this.pooledBalanceUsd,
+    required this.accountsInPool,
+    required this.trappedCashReducedUsd,
+    required this.capitalEfficiencyGainPct,
+  });
+}
+
+class RiskExposureSummary {
+  final String currency;
+  final double exposureUsd;
+  final double pctOfTotal;
+  final bool isTrendUp;
+
+  const RiskExposureSummary({
+    required this.currency,
+    required this.exposureUsd,
+    required this.pctOfTotal,
+    required this.isTrendUp,
+  });
+}
+
+class RecentActivityItem {
+  final String dateStr;
+  final String entityName;
+  final String type;
+  final String currency;
+  final double amount;
+  final String status;
+
+  const RecentActivityItem({
+    required this.dateStr,
+    required this.entityName,
+    required this.type,
+    required this.currency,
+    required this.amount,
+    required this.status,
+  });
+}
+
+class SystemAlertItem {
+  final String title;
+  final String description;
+  final String timeAgo;
+  final String alertType; // 'warning', 'danger', 'info'
+
+  const SystemAlertItem({
+    required this.title,
+    required this.description,
+    required this.timeAgo,
+    required this.alertType,
+  });
 }

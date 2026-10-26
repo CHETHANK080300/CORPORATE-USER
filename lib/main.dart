@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'providers/app_providers.dart';
 import 'services/corporate_repository.dart';
 import 'theme/app_colors.dart';
+import 'views/cio_overview_dashboard_view.dart';
 import 'views/company_detail_view.dart';
-import 'views/group_dashboard_view.dart';
 import 'views/liquidity_analysis_view.dart';
 import 'views/login_view.dart';
 import 'views/pending_approvals_view.dart';
@@ -31,14 +31,14 @@ class CorporateBankingApp extends StatelessWidget {
       child: Consumer<AppState>(
         builder: (context, appState, child) {
           return MaterialApp(
-            title: 'Vietnam Corporate Banking',
+            title: 'Treasury Dashboard',
             debugShowCheckedModeBanner: false,
             theme: ThemeData(
               useMaterial3: true,
               scaffoldBackgroundColor: AppColors.background,
               colorScheme: ColorScheme.fromSeed(
-                seedColor: AppColors.primaryBlue,
-                primary: AppColors.primaryBlue,
+                seedColor: AppColors.primary,
+                primary: AppColors.primary,
                 surface: AppColors.surface,
               ),
               fontFamily: 'Roboto',
@@ -71,35 +71,8 @@ class RootShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final appState = context.watch<AppState>();
-
-    Widget content;
-    switch (appState.selectedNavigationRoute) {
-      case 'overview':
-        content = const GroupDashboardView();
-        break;
-      case 'liquidity':
-        content = const LiquidityAnalysisView();
-        break;
-      case 'companies':
-        content = CompanyDetailView(companyId: appState.selectedCompanyId);
-        break;
-      case 'accounts':
-        content = CompanyDetailView(companyId: appState.selectedCompanyId);
-        break;
-      case 'approvals':
-        content = const PendingApprovalsView();
-        break;
-      case 'transactions':
-        content = const PendingApprovalsView();
-        break;
-      case 'reports':
-        content = const LiquidityAnalysisView();
-        break;
-      default:
-        content = const GroupDashboardView();
-    }
-
-    return MainLayout(child: content);
+    return const MainLayout(
+      child: CioOverviewDashboardView(),
+    );
   }
 }
